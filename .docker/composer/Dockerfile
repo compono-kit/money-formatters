@@ -1,4 +1,4 @@
-FROM php:8.0-alpine
+FROM php:8.3-alpine
 ARG GITHUB_TOKEN
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

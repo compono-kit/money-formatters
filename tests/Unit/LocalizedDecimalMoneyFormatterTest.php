@@ -2,7 +2,7 @@
 
 namespace ComponoKit\Money\Formatters\Tests\Unit;
 
-use ComponoKit\Money\Formatters\Constants\CurrencyOutput;
+use ComponoKit\Money\Formatters\Types\CurrencyOutput;
 use ComponoKit\Money\Formatters\SimpleMoneyFormatter;
 use ComponoKit\Money\Formatters\Tests\Traits\BuildingMoney;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +30,7 @@ class LocalizedDecimalMoneyFormatterTest extends TestCase
 	/**
 	 * @dataProvider MoneyDataProvider
 	 */
-	public function testFormat( int $amount, string $currencyOutput, string $expectedOutput ): void
+	public function testFormat( int $amount, CurrencyOutput $currencyOutput, string $expectedOutput ): void
 	{
 		self::assertEquals( $expectedOutput, SimpleMoneyFormatter::format( $this->buildMoney( $amount ), $currencyOutput ) );
 	}
@@ -38,7 +38,7 @@ class LocalizedDecimalMoneyFormatterTest extends TestCase
 	/**
 	 * @dataProvider MoneyDataProvider
 	 */
-	public function testFormatString( int $amount, string $currencyOutput, string $expectedOutput ): void
+	public function testFormatString( int $amount, CurrencyOutput $currencyOutput, string $expectedOutput ): void
 	{
 		$formatter = new SimpleMoneyFormatter( $currencyOutput );
 
