@@ -4,6 +4,7 @@
 
 ### Changed
 * Uses now PHP 8.3 
+* [BC] CurrencyOutput is now an enum
 
 ---
 
