@@ -2,16 +2,16 @@
 
 namespace ComponoKit\Money\Formatters;
 
-use ComponoKit\Money\Formatters\Constants\CurrencyOutput;
+use ComponoKit\Money\Formatters\Types\CurrencyOutput;
 use ComponoKit\Money\Formatters\Traits\BuildingFormattedString;
 use ComponoKit\Money\Interfaces\FormatsMoneyString;
 use ComponoKit\Money\Interfaces\RepresentsMoney;
 
-class LocalizedDecimalMoneyFormatter implements FormatsMoneyString
+final class LocalizedDecimalMoneyFormatter implements FormatsMoneyString
 {
 	use BuildingFormattedString;
 
-	public function __construct( private string $locale, private string $currencyOutput = CurrencyOutput::RIGHT_SYMBOL )
+	public function __construct( private readonly string $locale, private readonly CurrencyOutput $currencyOutput = CurrencyOutput::RIGHT_SYMBOL )
 	{
 	}
 
@@ -20,7 +20,7 @@ class LocalizedDecimalMoneyFormatter implements FormatsMoneyString
 		return self::format( $money, $this->locale, $this->currencyOutput );
 	}
 
-	public static function format( RepresentsMoney $money, string $locale, string $currencyOutput = CurrencyOutput::RIGHT_SYMBOL ): string
+	public static function format( RepresentsMoney $money, string $locale, CurrencyOutput $currencyOutput = CurrencyOutput::RIGHT_SYMBOL ): string
 	{
 		$numberFormatter = new \NumberFormatter( $locale, \NumberFormatter::DECIMAL );
 

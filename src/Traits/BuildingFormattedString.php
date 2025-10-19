@@ -2,29 +2,20 @@
 
 namespace ComponoKit\Money\Formatters\Traits;
 
-use ComponoKit\Money\Formatters\Constants\CurrencyOutput;
+use ComponoKit\Money\Formatters\Types\CurrencyOutput;
 use ComponoKit\Money\Interfaces\RepresentsCurrency;
 
 trait BuildingFormattedString
 {
-	private static function build( string $amount, RepresentsCurrency $currency, string $currencyOutput ): string
+	private static function build( string $amount, RepresentsCurrency $currency, CurrencyOutput $currencyOutput ): string
 	{
-		switch ( $currencyOutput )
+		return match ($currencyOutput)
 		{
-			case CurrencyOutput::RIGHT_SYMBOL:
-				return $amount . ' ' . $currency->getSymbol();
-
-			case CurrencyOutput::RIGHT_ISO_CODE:
-				return $amount . ' ' . $currency->getIsoCode();
-
-			case CurrencyOutput::LEFT_SYMBOL:
-				return $currency->getSymbol() . ' ' . $amount;
-
-			case CurrencyOutput::LEFT_ISO_CODE:
-				return $currency->getIsoCode() . ' ' . $amount;
-
-			default:
-				return $amount;
-		}
+			CurrencyOutput::RIGHT_SYMBOL   => $amount . ' ' . $currency->getSymbol(),
+			CurrencyOutput::RIGHT_ISO_CODE => $amount . ' ' . $currency->getIsoCode(),
+			CurrencyOutput::LEFT_SYMBOL    => $currency->getSymbol() . ' ' . $amount,
+			CurrencyOutput::LEFT_ISO_CODE  => $currency->getIsoCode() . ' ' . $amount,
+			default                        => $amount
+		};
 	}
 }

@@ -59,7 +59,7 @@ echo $formatter->formatString($money);
 **Features**
 - No locale dependency.
 - No thousand separators.
-- Optional control for currency presentation over constants in `CurrencyOutput`:
+- Optional control for currency presentation using enum `CurrencyOutput`:
     - `LEFT_SYMBOL` => Example: € 1234.56
     - `RIGHT_SYMBOL` => Example: 1234.56 €
     - `LEFT_ISO_CODE` => Example: EUR 1234.56
@@ -83,7 +83,7 @@ echo $formatter->formatString($money);
 **Features**
 - Locale-dependent decimal separators.
 - Ideal when you want localized numbers but still want control over currency display.
-- Optional control for currency presentation over constants in `CurrencyOutput`:
+- Optional control for currency presentation using enum `CurrencyOutput`:
     - `LEFT_SYMBOL` => Example: € 1.234,56
     - `RIGHT_SYMBOL` => Example: 1.234,56 €
     - `LEFT_ISO_CODE` => Example: EUR 1.234,56
