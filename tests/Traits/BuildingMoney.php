@@ -7,11 +7,12 @@ use ComponoKit\Money\Interfaces\RepresentsMoney;
 
 trait BuildingMoney
 {
-	private function buildMoney( int $amount, string $currencyCode, int $minorUnitFactor ): RepresentsMoney
+	private function buildMoney( int $amount ): RepresentsMoney
 	{
 		$currency = $this->createMock( RepresentsCurrency::class );
-		$currency->method( 'getIsoCode' )->willReturn( $currencyCode );
-		$currency->method( 'getMinorUnitFactor' )->willReturn( $minorUnitFactor );
+		$currency->method( 'getIsoCode' )->willReturn( 'EUR' );
+		$currency->method( 'getSymbol' )->willReturn( '€' );
+		$currency->method( 'getMinorUnitFactor' )->willReturn( 100 );
 
 		$money = $this->createMock( RepresentsMoney::class );
 		$money->method( 'getAmount' )->willReturn( $amount );
