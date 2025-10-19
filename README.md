@@ -6,7 +6,7 @@ Uses interfaces from compono-kit/money-interfaces.
 
 ## Requirements
 
-* PHP >= 8.0
+* PHP >= 8.3
 * compono-kit/money-interfaces
 
 ## 📦 Installation
