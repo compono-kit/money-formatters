@@ -3,11 +3,11 @@
 namespace ComponoKit\Money\Formatters\Tests\Unit;
 
 use ComponoKit\Money\Formatters\Constants\CurrencyOutput;
-use ComponoKit\Money\Formatters\IntlDecimalFormatter;
+use ComponoKit\Money\Formatters\LocalizedDecimalMoneyFormatter;
 use ComponoKit\Money\Formatters\Tests\Traits\BuildingMoney;
 use PHPUnit\Framework\TestCase;
 
-class IntlDecimalFormatterTest extends TestCase
+class SimpleMoneyFormatterTest extends TestCase
 {
 	use BuildingMoney;
 
@@ -39,7 +39,7 @@ class IntlDecimalFormatterTest extends TestCase
 	 */
 	public function testFormat( int $amount, string $locale, string $currencyOutput, string $expectedOutput ): void
 	{
-		self::assertEquals( $expectedOutput, IntlDecimalFormatter::format( $this->buildMoney( $amount ), $locale, $currencyOutput ) );
+		self::assertEquals( $expectedOutput, LocalizedDecimalMoneyFormatter::format( $this->buildMoney( $amount ), $locale, $currencyOutput ) );
 	}
 
 	/**
@@ -47,7 +47,7 @@ class IntlDecimalFormatterTest extends TestCase
 	 */
 	public function testFormatString( int $amount, string $locale, string $currencyOutput, string $expectedOutput ): void
 	{
-		$formatter = new IntlDecimalFormatter( $locale, $currencyOutput );
+		$formatter = new LocalizedDecimalMoneyFormatter( $locale, $currencyOutput );
 
 		self::assertEquals( $expectedOutput, $formatter->formatString( $this->buildMoney( $amount ) ) );
 	}

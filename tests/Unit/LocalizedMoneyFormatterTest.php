@@ -2,11 +2,11 @@
 
 namespace ComponoKit\Money\Formatters\Tests\Unit;
 
-use ComponoKit\Money\Formatters\IntlMoneyFormatter;
+use ComponoKit\Money\Formatters\LocalizedMoneyFormatter;
 use ComponoKit\Money\Formatters\Tests\Traits\BuildingMoney;
 use PHPUnit\Framework\TestCase;
 
-class IntlMoneyFormatterTest extends TestCase
+class LocalizedMoneyFormatterTest extends TestCase
 {
 	use BuildingMoney;
 
@@ -34,7 +34,7 @@ class IntlMoneyFormatterTest extends TestCase
 	 */
 	public function testIfFormattingReturnsExpectedOutput( int $amount, string $locale, string $expectedOutput ): void
 	{
-		self::assertEquals( $expectedOutput, IntlMoneyFormatter::format( $this->buildMoney( $amount ), $locale ) );
+		self::assertEquals( $expectedOutput, LocalizedMoneyFormatter::format( $this->buildMoney( $amount ), $locale ) );
 	}
 
 	/**
@@ -42,7 +42,7 @@ class IntlMoneyFormatterTest extends TestCase
 	 */
 	public function testFormatString( int $amount, string $locale, string $expectedOutput ): void
 	{
-		$formatter = new IntlMoneyFormatter( $locale );
+		$formatter = new LocalizedMoneyFormatter( $locale );
 
 		self::assertEquals( $expectedOutput, $formatter->formatString( $this->buildMoney( $amount ) ) );
 	}

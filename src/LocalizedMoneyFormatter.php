@@ -5,7 +5,7 @@ namespace ComponoKit\Money\Formatters;
 use ComponoKit\Money\Interfaces\FormatsMoneyString;
 use ComponoKit\Money\Interfaces\RepresentsMoney;
 
-class IntlMoneyFormatter implements FormatsMoneyString
+class LocalizedMoneyFormatter implements FormatsMoneyString
 {
 	public function __construct( private string $locale )
 	{

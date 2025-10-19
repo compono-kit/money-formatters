@@ -7,7 +7,7 @@ use ComponoKit\Money\Formatters\Traits\BuildingFormattedString;
 use ComponoKit\Money\Interfaces\FormatsMoneyString;
 use ComponoKit\Money\Interfaces\RepresentsMoney;
 
-class DecimalMoneyFormatter implements FormatsMoneyString
+class SimpleMoneyFormatter implements FormatsMoneyString
 {
 	use BuildingFormattedString;
 
