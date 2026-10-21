@@ -4,6 +4,7 @@ namespace ComponoKit\Money\Formatters\Tests\Unit;
 
 use ComponoKit\Money\Formatters\LocalizedMoneyFormatter;
 use ComponoKit\Money\Formatters\Tests\Traits\BuildingMoney;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class LocalizedMoneyFormatterTest extends TestCase
@@ -29,17 +30,13 @@ class LocalizedMoneyFormatterTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider MoneyDataProvider
-	 */
+	#[DataProvider( 'MoneyDataProvider' )]
 	public function testIfFormattingReturnsExpectedOutput( int $amount, string $locale, string $expectedOutput ): void
 	{
 		self::assertEquals( $expectedOutput, LocalizedMoneyFormatter::format( $this->buildMoney( $amount ), $locale ) );
 	}
 
-	/**
-	 * @dataProvider MoneyDataProvider
-	 */
+	#[DataProvider( 'MoneyDataProvider' )]
 	public function testFormatString( int $amount, string $locale, string $expectedOutput ): void
 	{
 		$formatter = new LocalizedMoneyFormatter( $locale );

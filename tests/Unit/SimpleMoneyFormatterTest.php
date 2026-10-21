@@ -2,9 +2,10 @@
 
 namespace ComponoKit\Money\Formatters\Tests\Unit;
 
-use ComponoKit\Money\Formatters\Types\CurrencyOutput;
-use ComponoKit\Money\Formatters\LocalizedDecimalMoneyFormatter;
+use ComponoKit\Money\Formatters\SimpleMoneyFormatter;
 use ComponoKit\Money\Formatters\Tests\Traits\BuildingMoney;
+use ComponoKit\Money\Formatters\Types\CurrencyOutput;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class SimpleMoneyFormatterTest extends TestCase
@@ -14,41 +15,35 @@ class SimpleMoneyFormatterTest extends TestCase
 	public static function MoneyDataProvider(): array
 	{
 		return [
-			[ 0, 'de_DE', CurrencyOutput::NONE, '0' ],
-			[ 100, 'de_DE', CurrencyOutput::NONE, '1' ],
-			[ 10000000000, 'de_DE', CurrencyOutput::NONE, '100.000.000' ],
-			[ 123456789, 'en_US', CurrencyOutput::NONE, '1,234,567.89' ],
-			[ -123456789, 'en_US', CurrencyOutput::NONE, '-1,234,567.89' ],
-			[ 5990, 'en_US', CurrencyOutput::NONE, '59.9' ],
-			[ -5990, 'en_US', CurrencyOutput::NONE, '-59.9' ],
-			[ 5990, 'de_DE', CurrencyOutput::NONE, '59,9' ],
-			[ -5990, 'de_DE', CurrencyOutput::NONE, '-59,9' ],
-			[ 590090, 'en_US', CurrencyOutput::NONE, '5,900.9' ],
-			[ -590090, 'en_US', CurrencyOutput::NONE, '-5,900.9' ],
-			[ 590090, 'de_DE', CurrencyOutput::NONE, '5.900,9' ],
-			[ -590090, 'de_DE', CurrencyOutput::NONE, '-5.900,9' ],
-			[ 0, 'de_DE', CurrencyOutput::LEFT_SYMBOL, '€ 0' ],
-			[ 0, 'de_DE', CurrencyOutput::RIGHT_SYMBOL, '0 €' ],
-			[ 0, 'de_DE', CurrencyOutput::LEFT_ISO_CODE, 'EUR 0' ],
-			[ 0, 'de_DE', CurrencyOutput::RIGHT_ISO_CODE, '0 EUR' ],
+			'zero'                         => [ 0, CurrencyOutput::NONE, '0.00' ],
+			'one unit'                     => [ 100, CurrencyOutput::NONE, '1.00' ],
+			'large amount'                 => [ 123456789, CurrencyOutput::NONE, '1234567.89' ],
+			'large negative amount'        => [ -123456789, CurrencyOutput::NONE, '-1234567.89' ],
+			'amount with trailing zero'    => [ 5990, CurrencyOutput::NONE, '59.90' ],
+			'negative with trailing zero'  => [ -5990, CurrencyOutput::NONE, '-59.90' ],
+			'symbol on the left'           => [ 0, CurrencyOutput::LEFT_SYMBOL, '€ 0.00' ],
+			'symbol on the right'          => [ 0, CurrencyOutput::RIGHT_SYMBOL, '0.00 €' ],
+			'iso code on the left'         => [ 0, CurrencyOutput::LEFT_ISO_CODE, 'EUR 0.00' ],
+			'iso code on the right'        => [ 0, CurrencyOutput::RIGHT_ISO_CODE, '0.00 EUR' ],
 		];
 	}
 
-	/**
-	 * @dataProvider MoneyDataProvider
-	 */
-	public function testFormat( int $amount, string $locale, CurrencyOutput $currencyOutput, string $expectedOutput ): void
+	#[DataProvider( 'MoneyDataProvider' )]
+	public function testFormat( int $amount, CurrencyOutput $currencyOutput, string $expectedOutput ): void
 	{
-		self::assertEquals( $expectedOutput, LocalizedDecimalMoneyFormatter::format( $this->buildMoney( $amount ), $locale, $currencyOutput ) );
+		self::assertSame( $expectedOutput, SimpleMoneyFormatter::format( $this->buildMoney( $amount ), $currencyOutput ) );
 	}
 
-	/**
-	 * @dataProvider MoneyDataProvider
-	 */
-	public function testFormatString( int $amount, string $locale, CurrencyOutput $currencyOutput, string $expectedOutput ): void
+	#[DataProvider( 'MoneyDataProvider' )]
+	public function testFormatString( int $amount, CurrencyOutput $currencyOutput, string $expectedOutput ): void
 	{
-		$formatter = new LocalizedDecimalMoneyFormatter( $locale, $currencyOutput );
+		$formatter = new SimpleMoneyFormatter( $currencyOutput );
 
-		self::assertEquals( $expectedOutput, $formatter->formatString( $this->buildMoney( $amount ) ) );
+		self::assertSame( $expectedOutput, $formatter->formatString( $this->buildMoney( $amount ) ) );
+	}
+
+	public function testFormatCurrencyWithoutMinorUnits(): void
+	{
+		self::assertSame( '1234 ¥', SimpleMoneyFormatter::format( $this->buildMoney( 1234, 'JPY', '¥', 1 ) ) );
 	}
 }
