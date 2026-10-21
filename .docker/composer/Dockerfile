@@ -1,11 +1,13 @@
-FROM php:8.3-alpine
-ARG GITHUB_TOKEN
+FROM php:8.5-alpine
+
+ENV XDEBUG_VERSION=3.5.3
+
+RUN apk add --update --no-cache linux-headers icu-dev icu-data-full $PHPIZE_DEPS \
+	&& docker-php-ext-install intl \
+	&& pecl install xdebug-${XDEBUG_VERSION} \
+	&& docker-php-ext-enable xdebug \
+	&& apk del $PHPIZE_DEPS
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-RUN composer config --global github-oauth.github.com ${GITHUB_TOKEN}
-RUN composer self-update
-
-RUN apk add --update --no-cache icu-dev icu-data-full $PHPIZE_DEPS
-RUN docker-php-ext-install bcmath intl
 
 ENTRYPOINT ["composer"]

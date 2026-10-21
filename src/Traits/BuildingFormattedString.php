@@ -11,11 +11,11 @@ trait BuildingFormattedString
 	{
 		return match ($currencyOutput)
 		{
+			CurrencyOutput::NONE           => $amount,
 			CurrencyOutput::RIGHT_SYMBOL   => $amount . ' ' . $currency->getSymbol(),
 			CurrencyOutput::RIGHT_ISO_CODE => $amount . ' ' . $currency->getIsoCode(),
 			CurrencyOutput::LEFT_SYMBOL    => $currency->getSymbol() . ' ' . $amount,
 			CurrencyOutput::LEFT_ISO_CODE  => $currency->getIsoCode() . ' ' . $amount,
-			default                        => $amount
 		};
 	}
 }
